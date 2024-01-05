@@ -3,6 +3,7 @@ name = "kmpm"
 version = "0.1.0"
 authors = ["Tom0427"]
 description = "KMP(Knuth-Morris-Pratt algorithm) method library"
+documentation = "https://github.com/Tom-game-project/kmpm.git"
 license = "MIT"
 edition = "2021"
 

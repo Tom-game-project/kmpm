@@ -5,23 +5,29 @@
 /// ## kmpm_str
 /// 
 /// ```
-/// let text =    "hello world !";
-/// let pattern = "world";
-/// let ctr = kmpm_str(text, pattern);
-/// match ctr {
-///     Some(cursor)=>{
-///         println!("matcched index {}",cursor)
-///     }
-///     None=>{
-///         println!("\"{}\" does not match",pattern);
-///     }
+/// use kmpm::kmpm_str;
+/// 
+/// fn main(){
+///   let text =    "hello world !";
+///   let pattern = "world";
+///   let ctr = kmpm_str(text, pattern);
+///   match ctr {
+///       Some(cursor)=>{
+///           println!("matched index {}",cursor)
+///       }
+///       None=>{
+///           println!("\"{}\" does not match",pattern);
+///       }
+///   }
 /// }
-/// // matcched index 6
+/// 
+/// // matched index 6
 /// 
 /// // "hello world !"
 /// //       "world"
 /// //  ------^^^^^
-/// //  0123456
+/// //        |
+/// //        #6
 /// ```
 /// 
 
@@ -98,7 +104,8 @@ mod tests {
         let ctr = kmpm_str(text, pattern);
         match ctr {
             Some(cursor)=>{
-                println!("matcched index {}",cursor)
+                assert!(cursor==6);
+                println!("matched index {}",cursor)
             }
             None=>{
                 println!("\"{}\" does not match",pattern);
@@ -113,7 +120,8 @@ mod tests {
         let ctr = kmpm_str(text, pattern);
         match ctr {
             Some(cursor)=>{
-                println!("matcched index {}",cursor)
+                assert!(cursor==24);
+                println!("matched index {}",cursor)
             }
             None=>{
                 println!("\"{}\" does not match",pattern);
@@ -123,11 +131,19 @@ mod tests {
 
     #[test]
     fn test02() {
-        let a="hello 今日は";
-        println!("len {}\ncount {}",a.len(),a.chars().count());
-        println!("{}",a.chars().nth(0).unwrap());
-        let b:Vec<char> = a.chars().collect();
-        println!("{:?}",&b[0..3]);
+        let text="hello こんにちは world 世界";
+        let pattern = "こんにちは";
+
+        let ctr = kmpm_str(text, pattern).unwrap();
+        assert!(ctr==6);
+    }
+
+    #[test]
+    fn test03(){
+        let text="hello こんにちは world 世界";
+        let pattern = "2024";
+
+        assert!(kmpm_str(text, pattern).is_none());
     }
 
 }
