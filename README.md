@@ -4,7 +4,7 @@ KMPM (Knuth-Morris-Pratt algorithm) library. KMPM is one of most effective Chara
 
 ## crate
 
- [crate]("https://crates.io/crates/kmpm")
+[crate](https://crates.io/crates/kmpm)
 
 ## Usage
 
@@ -45,3 +45,7 @@ fn main(){
 //        |
 //        #6
 ```
+
+## License
+
+[MIT](/LICENSE.MIT)
