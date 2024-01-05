@@ -2,7 +2,7 @@
 
 KMPM (Knuth-Morris-Pratt algorithm) library. KMPM is one of most effective Character query algorithm.
 
-## crate
+## Crate
 
 [crate](https://crates.io/crates/kmpm)
 
@@ -14,7 +14,7 @@ Cargo.toml
 
 ```toml
 [dependencies]
-kmpm="0.1.1"
+kmpm="0.1.2"
 ```
 
 ## Code example

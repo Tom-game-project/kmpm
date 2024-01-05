@@ -22,20 +22,27 @@
 /// }
 /// 
 /// // matched index 6
-/// 
-/// // "hello world !"
-/// //       "world"
+/// //
+/// // "hello world !" :text
+/// //       "world"   :pattern
 /// //  ------^^^^^
 /// //        |
-/// //        #6
+/// //        #6 -> return 6
+/// ```
+
+
+/// # kmpm_str 
+/// 
+/// return the first and only match found
+/// 
 /// ```
 /// 
-
+/// ```
 pub fn kmpm_str(text:&str,pattern:&str)->Option<usize>{
     let sm_list = skipmap(pattern);
     let mut cursor:usize= 0;
     let mut prev_skip_step:usize = 0;
-    let endpoint = text.chars().count()-pattern.chars().count();
+    let endpoint = text.chars().count() - pattern.chars().count();
     loop{
         let mut skipstep:usize = 1;
         let mut elseflag = false;
@@ -58,6 +65,56 @@ pub fn kmpm_str(text:&str,pattern:&str)->Option<usize>{
         }
     }
 }
+
+
+/// # kmpm_str_all
+/// 
+/// find all matching
+/// 
+/// allow duplicates
+/// 
+/// ```
+/// // "abababa" :text
+/// // "aba"     :pattern
+/// //  ^^^
+/// //  |"aba" <- This match is allowed
+/// //  | ^^^
+/// //  | |"aba"
+/// //  | | ^^^
+/// //  | | |
+/// //  #0#2#4 -> return [0,2,4]
+/// ```
+/// 
+/// ## example
+/// 
+/// ```
+/// ```
+pub fn kmpm_str_all(text:&str,pattern:&str)->Vec<usize>{
+    todo!()
+}
+
+/// # kmpm_str_nad
+/// 
+/// find all matching
+/// 
+/// not allow duplicates (nad)
+/// 
+/// ```
+/// // "abababa" :text
+/// // "aba"     :pattern :cursor_start = 0
+/// //  ^^^
+/// //  |"aba" <- This matching is **not** allowed
+/// //  +-***
+/// //  |  "aba"
+/// //  +---^^^
+/// //  |   |
+/// //  #0  #4 -> return [0,4]
+/// ```
+/// 
+pub fn kmpm_str_nad(text:&str,pattern:&str,cursor_start:usize)->Vec<usize>{
+    todo!()
+}
+
 
 fn dup(txt0:&Vec<char>,txt1:&Vec<char>,gap:usize)->bool{
     let diflen = txt0.len()-gap;
@@ -91,6 +148,7 @@ fn skipmap(txt:&str)->Vec<usize>{
     .collect();
     return arr;
 }
+
 
 #[cfg(test)]
 mod tests {
@@ -145,5 +203,6 @@ mod tests {
 
         assert!(kmpm_str(text, pattern).is_none());
     }
+
 
 }
