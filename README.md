@@ -14,7 +14,7 @@ Cargo.toml
 
 ```toml
 [dependencies]
-kmpm="0.1.0"
+kmpm="0.1.1"
 ```
 
 ## Code example
