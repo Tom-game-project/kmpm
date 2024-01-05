@@ -1,5 +1,31 @@
+/// # kmpm
+/// 
+/// KMP(Knuth-Morris-Pratt algorithm) library
+/// 
+/// ## kmpm_str
+/// 
+/// ```
+/// let text =    "hello world !";
+/// let pattern = "world";
+/// let ctr = kmpm_str(text, pattern);
+/// match ctr {
+///     Some(cursor)=>{
+///         println!("matcched index {}",cursor)
+///     }
+///     None=>{
+///         println!("\"{}\" does not match",pattern);
+///     }
+/// }
+/// // matcched index 6
+/// 
+/// // "hello world !"
+/// //       "world"
+/// //  ------^^^^^
+/// //  0123456
+/// ```
+/// 
 
-fn kmpm(text:&str,pattern:&str)->Option<usize>{
+pub fn kmpm_str(text:&str,pattern:&str)->Option<usize>{
     let sm_list = skipmap(pattern);
     let mut cursor:usize= 0;
     let mut prev_skip_step:usize = 0;
@@ -27,20 +53,20 @@ fn kmpm(text:&str,pattern:&str)->Option<usize>{
     }
 }
 
-fn dup(txt0:&str,txt1:&str,gap:usize)->bool{
-    let diflen = txt0.chars().count()-gap;
+fn dup(txt0:&Vec<char>,txt1:&Vec<char>,gap:usize)->bool{
+    let diflen = txt0.len()-gap;
     let dig_txt0 = &txt0[gap..];
     let dig_txt1 = &txt1[..diflen];
     dig_txt0==dig_txt1
 }
 
-fn capable_gap(txt0:&str,txt1:&str)->usize{
-    let txt0_len = txt0.chars().count();
+fn capable_gap(txt0:&Vec<char>,txt1:&Vec<char>)->usize{
+    let txt0_len = txt0.len();
     if txt0_len==0{
         return 1;
     }
     for i in 1..txt0_len{
-        if dup(txt0, txt1, i){
+        if dup(&txt0, &txt1, i){
             return i;
         }
     }
@@ -48,11 +74,12 @@ fn capable_gap(txt0:&str,txt1:&str)->usize{
 }
 
 fn skipmap(txt:&str)->Vec<usize>{
+    let txt_vec:Vec<char>= txt.chars().collect();
     let arr:Vec<usize> = (0..txt.chars().count())
     .map(
         |i|capable_gap(
-            &txt[..i],
-            txt
+            &txt_vec[..i].to_vec(),
+            &txt_vec
             )
         )
     .collect();
@@ -66,9 +93,9 @@ mod tests {
 
     #[test]
     fn test00(){
-        let text =    "hello world";
+        let text =   "hello world";
         let pattern ="world";
-        let ctr = kmpm(text, pattern);
+        let ctr = kmpm_str(text, pattern);
         match ctr {
             Some(cursor)=>{
                 println!("matcched index {}",cursor)
@@ -81,9 +108,9 @@ mod tests {
 
     #[test]
     fn test01(){
-        let text =    "文字列照会に失敗した場合いくつ飛ばせるかどうかを調べます";
+        let text =   "........................失敗...fosososos";
         let pattern ="失敗";
-        let ctr = kmpm(text, pattern);
+        let ctr = kmpm_str(text, pattern);
         match ctr {
             Some(cursor)=>{
                 println!("matcched index {}",cursor)
@@ -93,4 +120,14 @@ mod tests {
             }
         }
     }
+
+    #[test]
+    fn test02() {
+        let a="hello 今日は";
+        println!("len {}\ncount {}",a.len(),a.chars().count());
+        println!("{}",a.chars().nth(0).unwrap());
+        let b:Vec<char> = a.chars().collect();
+        println!("{:?}",&b[0..3]);
+    }
+
 }
