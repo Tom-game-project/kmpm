@@ -25,7 +25,7 @@ kmpm="0.2"
 
 main.rs
 
-```
+```rs
 use kmpm::kmpm_str;
 
 fn main(){
