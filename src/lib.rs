@@ -1,8 +1,20 @@
-/// # kmpm
+//! # kmpm
+//! 
+//! [![github]](https://github.com/Tom-game-project/kmpm)&ensp;[![crates-io]](https://crates.io/crates/kmpm)&ensp;[![docs-rs]](https://docs.rs/kmpm/latest/kmpm/)
+//! 
+//! [github]: https://img.shields.io/badge/github-30363d?style=for-the-badge&labelColor=555555&logo=github
+//! [crates-io]: https://img.shields.io/badge/crates.io-253323?style=for-the-badge&labelColor=555555&logo=rust
+//! [docs-rs]: https://img.shields.io/badge/docs.rs-2a2a2a?style=for-the-badge&labelColor=555555&logo=docs.rs
+//! 
+//! KMPM (Knuth-Morris-Pratt algorithm) library. KMPM is one of effective character query algorithm.
+//! 
+//! If the length of the text is n and the length of the pattern is m, the KMP algorithm processes in O(n+m) time
+//! 
+
+
+/// # kmpm_str 
 /// 
-/// KMP(Knuth-Morris-Pratt algorithm) library
-/// 
-/// ## kmpm_str
+/// return the first and only match found
 /// 
 /// ```
 /// use kmpm::kmpm_str;
@@ -20,23 +32,18 @@
 ///       }
 ///   }
 /// }
-/// 
-/// // matched index 6
-/// //
-/// // "hello world !" :text
-/// //       "world"   :pattern
-/// //  ------^^^^^
-/// //        |
-/// //        #6 -> return 6
-/// ```
-
-
-/// # kmpm_str 
-/// 
-/// return the first and only match found
-/// 
 /// ```
 /// 
+/// ```text
+/// matched index 6
+/// 
+/// ========================
+/// 
+/// "hello world !" :text
+///       "world"   :pattern
+///  ------^^^^^
+///        |
+///        #6 -> return 6
 /// ```
 pub fn kmpm_str(text:&str,pattern:&str)->Option<usize>{
     let sm_list = skipmap(pattern);
@@ -69,15 +76,30 @@ pub fn kmpm_str(text:&str,pattern:&str)->Option<usize>{
 
 /// # kmpm_str_all
 /// 
-/// find all matching
+/// find all matching.allow duplicates.
 /// 
-/// allow duplicates
+/// ## Example
+/// 
+/// ```
+/// use kmpm::kmpm_str_all;
+/// 
+/// fn main(){
+///   let text = "abababa";
+///   let pattern = "aba";
+///   let match_list = kmpm_str_all(text,pattern);
+///   println!("output {:?}",match_list);
+/// }
+/// ```
 /// 
 /// ```text
+/// output [0,2,4]
+/// 
+/// ========================
+/// 
 /// "abababa" :text
 /// "aba"     :pattern
 ///  ^^^
-///  |"aba" <- This match is allowed
+///  |"aba" <- This matching is allowed
 ///  | ^^^
 ///  | |"aba"
 ///  | | ^^^
@@ -85,10 +107,6 @@ pub fn kmpm_str(text:&str,pattern:&str)->Option<usize>{
 ///  #0#2#4 -> return [0,2,4]
 /// ```
 /// 
-/// ## Example
-/// 
-/// ```
-/// ```
 pub fn kmpm_str_all(text:&str,pattern:&str)->Vec<usize>{
     let mut rarr:Vec<usize> = Vec::new();
     let sm_list = skipmap(pattern);
@@ -119,9 +137,17 @@ pub fn kmpm_str_all(text:&str,pattern:&str)->Vec<usize>{
 
 /// # kmpm_str_nad
 /// 
-/// find all matching
+/// find all matching.not allow duplicates (nad).
 /// 
-/// not allow duplicates (nad)
+/// ## Example
+/// 
+/// ```
+/// use kmpm::kmpm_str_nad;
+/// 
+/// fn main(){
+///   
+/// }
+/// ```
 /// 
 /// ```text
 /// "abababa" :text
