@@ -85,12 +85,36 @@ pub fn kmpm_str(text:&str,pattern:&str)->Option<usize>{
 /// //  #0#2#4 -> return [0,2,4]
 /// ```
 /// 
-/// ## example
+/// ## Example
 /// 
 /// ```
 /// ```
 pub fn kmpm_str_all(text:&str,pattern:&str)->Vec<usize>{
-    todo!()
+    let mut rarr:Vec<usize> = Vec::new();
+    let sm_list = skipmap(pattern);
+    let mut cursor:usize= 0;
+    let mut prev_skip_step:usize = 0;
+    let endpoint = text.chars().count() - pattern.chars().count();
+    loop{
+        let mut skipstep:usize = 1;
+        let mut elseflag = false;
+        for i in 0..pattern.chars().count()-prev_skip_step{
+            if text.chars().nth(cursor+prev_skip_step+i)!=pattern.chars().nth(prev_skip_step+i){
+                skipstep=sm_list[i];
+                prev_skip_step = skipstep;
+                elseflag = true;
+                break;
+            }
+        }
+        if !elseflag{
+            rarr.push(cursor);
+        }
+        if cursor>endpoint{
+            return rarr
+        }else {
+            cursor += skipstep;
+        }
+    }
 }
 
 /// # kmpm_str_nad
@@ -204,5 +228,12 @@ mod tests {
         assert!(kmpm_str(text, pattern).is_none());
     }
 
+    #[test]
+    fn test04(){
+        let text="abababa";
+        let pattern = "aba";
 
+        println!("{:?}",kmpm_str_all(text, pattern));
+
+    }
 }
