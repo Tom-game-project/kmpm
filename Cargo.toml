@@ -4,6 +4,7 @@ version = "0.2.1"
 authors = ["Tom0427"]
 description = "KMP(Knuth-Morris-Pratt algorithm) method library"
 repository = "https://github.com/Tom-game-project/kmpm.git"
+categories = ["Algorithms","kmp"]
 documentation = "https://docs.rs/kmpm/latest/kmpm/"
 license = "MIT"
 edition = "2021"
