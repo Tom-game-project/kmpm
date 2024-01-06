@@ -73,16 +73,16 @@ pub fn kmpm_str(text:&str,pattern:&str)->Option<usize>{
 /// 
 /// allow duplicates
 /// 
-/// ```
-/// // "abababa" :text
-/// // "aba"     :pattern
-/// //  ^^^
-/// //  |"aba" <- This match is allowed
-/// //  | ^^^
-/// //  | |"aba"
-/// //  | | ^^^
-/// //  | | |
-/// //  #0#2#4 -> return [0,2,4]
+/// ```text
+/// "abababa" :text
+/// "aba"     :pattern
+///  ^^^
+///  |"aba" <- This match is allowed
+///  | ^^^
+///  | |"aba"
+///  | | ^^^
+///  | | |
+///  #0#2#4 -> return [0,2,4]
 /// ```
 /// 
 /// ## Example
@@ -123,16 +123,16 @@ pub fn kmpm_str_all(text:&str,pattern:&str)->Vec<usize>{
 /// 
 /// not allow duplicates (nad)
 /// 
-/// ```
-/// // "abababa" :text
-/// // "aba"     :pattern :cursor_start = 0
-/// //  ^^^
-/// //  |"aba" <- This matching is **not** allowed
-/// //  +-***
-/// //  |  "aba"
-/// //  +---^^^
-/// //  |   |
-/// //  #0  #4 -> return [0,4]
+/// ```text
+/// "abababa" :text
+/// "aba"     :pattern :cursor_start = 0
+///  ^^^
+///  |"aba" <- This matching is **not** allowed
+///  +-***
+///  |  "aba"
+///  +---^^^
+///  |   |
+///  #0  #4 -> return [0,4]
 /// ```
 /// 
 pub fn kmpm_str_nad(text:&str,pattern:&str,cursor_start:usize)->Vec<usize>{
