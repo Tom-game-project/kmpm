@@ -1,6 +1,6 @@
 [package]
 name = "kmpm"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Tom0427"]
 description = "KMP(Knuth-Morris-Pratt algorithm) method library"
 repository = "https://github.com/Tom-game-project/kmpm.git"
