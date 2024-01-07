@@ -53,7 +53,9 @@ pub fn kmpm_str(text:&str,pattern:&str)->Option<usize>{
     loop{
         let mut skipstep:usize = 1;
         let mut elseflag = false;
+        // 不必要なチェックを省きつつ調べていく
         for i in 0..pattern.chars().count()-prev_skip_step{
+            // 文字同士が一致しない場合
             if text.chars().nth(cursor+prev_skip_step+i)!=pattern.chars().nth(prev_skip_step+i){
                 skipstep=sm_list[i];
                 prev_skip_step = skipstep;
@@ -145,7 +147,9 @@ pub fn kmpm_str_all(text:&str,pattern:&str)->Vec<usize>{
 /// use kmpm::kmpm_str_nad;
 /// 
 /// fn main(){
-///   
+///   let text="abababa";
+///   let pattern = "aba";
+///   println!("{:?}",kmpm_str_nad(text, pattern,0));
 /// }
 /// ```
 /// 
@@ -162,7 +166,40 @@ pub fn kmpm_str_all(text:&str,pattern:&str)->Vec<usize>{
 /// ```
 /// 
 pub fn kmpm_str_nad(text:&str,pattern:&str,cursor_start:usize)->Vec<usize>{
-    todo!()
+    let mut rarr:Vec<usize> = Vec::new();
+    let sm_list = skipmap(pattern);
+    let mut cursor:usize= cursor_start;
+    let mut prev_skip_step:usize = 0;
+    let endpoint = text.chars().count() - pattern.chars().count();
+    loop{
+        let mut skipstep:usize = 1;
+        let mut elseflag = false;
+        // ここでパターンが一致しているかどうか最初から調べる
+        // prev_skip_step変数はさらに効率を上げるため
+        for i in 0..pattern.chars().count()-prev_skip_step{
+            if text.chars().nth(cursor+prev_skip_step+i)!=pattern.chars().nth(prev_skip_step+i){
+                skipstep=sm_list[i];
+                prev_skip_step = skipstep;
+                elseflag = true;
+                break;
+            }
+        }
+        if !elseflag{
+            println!("cursor {}\nskipstep {}\nprev_skip_step {}\n========",cursor,skipstep,prev_skip_step);
+            rarr.push(cursor);
+        }else {
+            println!("cursor {}\nskipstep {}\nprev_skip_step {}\n========",cursor,skipstep,prev_skip_step);
+        }
+        if cursor>endpoint{
+            return rarr;
+        }else {
+            if !elseflag{
+                cursor += skipstep + pattern.len();
+            }else {
+                cursor += skipstep;
+            }
+        }
+    }
 }
 
 
@@ -258,8 +295,14 @@ mod tests {
     fn test04(){
         let text="abababa";
         let pattern = "aba";
-
         println!("{:?}",kmpm_str_all(text, pattern));
+    }
 
+    #[test]
+    fn test05(){
+        let text="abababa";
+        let pattern = "aba";
+        println!("{:?}",kmpm_str_nad(text, pattern,0));//[0,4]
+        println!("{:?}",kmpm_str_nad(text, pattern,1));//[2]
     }
 }
